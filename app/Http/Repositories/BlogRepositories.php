@@ -20,4 +20,27 @@ class BlogRepositories
         return $this->model->create($data);
     }
 
+    public function getAll()
+    {
+        return $this->model->all();
+    }
+
+    public function fetch($where)
+    {
+        return $this->model->where($where)->first();
+    }
+
+    public function destroy($where)
+    {
+        return $this->model->where($where)->delete();
+    }
+
+    public function update($where, $request)
+    {
+        $entity = $this->model->where($where)->first();
+        if (!empty($entity)) {
+            $entity->update($request);
+            return $entity->refresh();
+        }
+    }
 }

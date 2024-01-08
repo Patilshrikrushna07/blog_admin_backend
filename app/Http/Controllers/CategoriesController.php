@@ -24,4 +24,25 @@ class CategoriesController extends Controller
         $data = $this->service->fetchAllCategories();
         return ApiResponse::successResponse('Categories Controller..', $data);
     }
+    public function show(Request $request, $id){
+        $data =  $this->service->fetch($id, $request);
+        return ApiResponse::successResponse('Categories has been fetched successfully.', $data);
+    }
+    public function destroy(Request $request, $id)
+    {
+        $response = $this->service->destroy($id);
+        return ApiResponse::successResponse('Categories has been deleted successfully.',$response);
+    }
+    public function update(Request $request, $id)
+    {
+        $data = $this->service->update(['id' => $id],$request->all());
+
+        if (!$data) {
+            return ApiResponse::failureResponse('request failed');
+        }
+        return ApiResponse::successResponse(
+            'Category updated successfully.',
+            $data
+        );
+    }
 }
